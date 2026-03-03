@@ -58,7 +58,7 @@ public class SoftWindBears {
         }
 
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(ModItems.GRIZZLY_LEATHER.get());
+            event.accept(ModItems.BEAR_SKIN.get());
         }
     }
 }

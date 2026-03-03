@@ -1,7 +1,7 @@
 {
   "item.softwindbears.grizzly_spawn_egg": "Яйце Виклику Гризлі",
   "item.softwindbears.panda_spawn_egg": "Яйце Виклику Панди",
-  "item.softwindbears.grizzly_leather": "Шкіра Гризлі",
-    "entity.softwindbears.grizzly_bear": "Гризлі",
-    "entity.softwindbears.bear_panda": "Панда"
+  "item.softwindbears.bear_skin": "Ведмежа Шкіра",
+  "entity.softwindbears.grizzly_bear": "Гризлі",
+  "entity.softwindbears.bear_panda": "Панда"
 }

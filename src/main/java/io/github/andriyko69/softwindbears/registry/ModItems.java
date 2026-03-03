@@ -19,7 +19,7 @@ public class ModItems {
                     0xFFFFFF,
                     new Item.Properties()
             ));
-    public static final Supplier<Item> GRIZZLY_LEATHER = ITEMS.registerSimpleItem("grizzly_leather");
+    public static final Supplier<Item> BEAR_SKIN = ITEMS.registerSimpleItem("bear_skin");
 
     public static final Supplier<Item> PANDA_SPAWN_EGG = ITEMS.register("panda_spawn_egg", () ->
             new DeferredSpawnEggItem(
