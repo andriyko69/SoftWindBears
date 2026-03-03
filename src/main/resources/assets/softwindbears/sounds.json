@@ -1,0 +1,54 @@
+{
+  "entity.bear.ambient": {
+    "subtitle": "subtitles.entity.bear.ambient",
+    "sounds": [
+      "softwindbears:mob/bear/idle1",
+      "softwindbears:mob/bear/idle2",
+      "softwindbears:mob/bear/idle3",
+      "softwindbears:mob/bear/idle4"
+    ]
+  },
+  "entity.bear.ambient_baby": {
+    "subtitle": "subtitles.entity.bear.ambient_baby",
+    "sounds": [
+      "softwindbears:mob/bear_baby/idle1",
+      "softwindbears:mob/bear_baby/idle2",
+      "softwindbears:mob/bear_baby/idle3",
+      "softwindbears:mob/bear_baby/idle4"
+    ]
+  },
+  "entity.bear.death": {
+    "subtitle": "subtitles.entity.bear.death",
+    "sounds": [
+      "softwindbears:mob/bear/death1",
+      "softwindbears:mob/bear/death2",
+      "softwindbears:mob/bear/death3"
+    ]
+  },
+  "entity.bear.hurt": {
+    "subtitle": "subtitles.entity.bear.hurt",
+    "sounds": [
+      "softwindbears:mob/bear/hurt1",
+      "softwindbears:mob/bear/hurt2",
+      "softwindbears:mob/bear/hurt3",
+      "softwindbears:mob/bear/hurt4"
+    ]
+  },
+  "entity.bear.step": {
+    "subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      "softwindbears:mob/bear/step1",
+      "softwindbears:mob/bear/step2",
+      "softwindbears:mob/bear/step3",
+      "softwindbears:mob/bear/step4"
+    ]
+  },
+  "entity.bear.warning": {
+    "subtitle": "subtitles.entity.bear.warning",
+    "sounds": [
+      "softwindbears:mob/bear/warning1",
+      "softwindbears:mob/bear/warning2",
+      "softwindbears:mob/bear/warning3"
+    ]
+  }
+}
