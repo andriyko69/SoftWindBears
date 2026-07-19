@@ -42,7 +42,7 @@ public class GrizzlyBearFishGoal extends MoveToBlockGoal {
 
     @Override
     public boolean canUse() {
-        return !mob.isBaby() && mob.getRandom().nextInt(6500) == 1 && super.canUse();
+        return mob.getRandom().nextInt(6500) == 1 && super.canUse();
     }
 
     @Override

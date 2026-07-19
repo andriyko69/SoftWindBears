@@ -15,9 +15,6 @@ public class ModSounds {
     public static DeferredHolder<SoundEvent, SoundEvent> BEAR_AMBIENT =
             SOUNDS.register("entity.bear.ambient",
                     () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(SoftWindBears.MOD_ID, "entity.bear.ambient")));
-    public static DeferredHolder<SoundEvent, SoundEvent> BEAR_AMBIENT_BABY =
-            SOUNDS.register("entity.bear.ambient_baby",
-                    () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(SoftWindBears.MOD_ID, "entity.bear.ambient_baby")));
     public static DeferredHolder<SoundEvent, SoundEvent> BEAR_DEATH =
             SOUNDS.register("entity.bear.death",
                     () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(SoftWindBears.MOD_ID, "entity.bear.death")));

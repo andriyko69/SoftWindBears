@@ -46,13 +46,8 @@ public class BearEntityModel<T extends AbstractBearEntity> extends QuadrupedMode
         this.leftFrontLeg.y = this.rightFrontLeg.y;
         this.leftFrontLeg.z = this.rightFrontLeg.z;
         this.leftFrontLeg.xRot -= g * (float)Math.PI * 0.45f;
-        if (this.young) {
-            this.head.y = 10.0f * h - 9.0f * g;
-            this.head.z = -16.0f * h - 7.0f * g;
-        } else {
-            this.head.y = 10.0f * h - 14.0f * g;
-            this.head.z = -16.0f * h - 3.0f * g;
-        }
+        this.head.y = 10.0f * h - 14.0f * g;
+        this.head.z = -16.0f * h - 3.0f * g;
         this.head.xRot += g * (float)Math.PI * 0.15f;
     }
 }

@@ -6,7 +6,7 @@ Originally made for the **SoftWind** modpack, but can be used standalone.
 ## Features
 - **Grizzly Bear** — spawns in warm taiga biomes
 - **Panda Bear** — spawns in jungle biomes (replacing vanilla pandas)
-- **Bear Skin** item dropped by grizzly bears (0–2, affected by Looting)
+- Bears always spawn as adults and cannot breed, be fed, or be tempted with food
 - Spawn eggs for both bears
 
 ## Config

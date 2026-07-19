@@ -8,15 +8,6 @@
       "softwindbears:mob/bear/idle4"
     ]
   },
-  "entity.bear.ambient_baby": {
-    "subtitle": "subtitles.entity.bear.ambient_baby",
-    "sounds": [
-      "softwindbears:mob/bear_baby/idle1",
-      "softwindbears:mob/bear_baby/idle2",
-      "softwindbears:mob/bear_baby/idle3",
-      "softwindbears:mob/bear_baby/idle4"
-    ]
-  },
   "entity.bear.death": {
     "subtitle": "subtitles.entity.bear.death",
     "sounds": [
