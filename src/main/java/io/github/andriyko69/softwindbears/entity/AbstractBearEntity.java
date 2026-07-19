@@ -13,8 +13,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -26,14 +24,12 @@ import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -55,23 +51,10 @@ public abstract class AbstractBearEntity extends Animal implements NeutralMob {
         super(entityType, level);
     }
 
-    protected abstract Ingredient getTemptItems();
-
-    protected abstract void addVariantGoals(); // panda vs grizzly goals
-
-    protected abstract @Nullable EntityType<? extends AgeableMob> getOffspringType();
+    protected abstract void addVariantGoals();
 
     protected boolean usesDefaultAttackGoals() {
         return true;
-    }
-
-    @Override
-    public @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
-        boolean isFood = this.isFood(player.getItemInHand(hand));
-        if (!isFood && !player.isSecondaryUseActive()) {
-            return InteractionResult.sidedSuccess(this.level().isClientSide);
-        }
-        return super.mobInteract(player, hand);
     }
 
     @Override
@@ -85,20 +68,15 @@ public abstract class AbstractBearEntity extends Animal implements NeutralMob {
             this.goalSelector.addGoal(1, new BearEscapeDangerGoal());
         }
 
-        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, getTemptItems(), false));
-        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
-
         addVariantGoals();
 
         this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 
-        this.targetSelector.addGoal(1, new BearRevengeGoal());
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 
         if (!Config.areFriends) {
-            this.targetSelector.addGoal(2, new ProtectBabiesGoal());
             this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
             this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Fox.class, 10, true, true, null));
             this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Rabbit.class, 10, true, true, null));
@@ -145,13 +123,22 @@ public abstract class AbstractBearEntity extends Animal implements NeutralMob {
 
     @Override
     public boolean isFood(@NotNull ItemStack stack) {
-        return getTemptItems().test(stack);
+        return false;
     }
 
     @Override
     public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel level, @NotNull AgeableMob other) {
-        EntityType<? extends AgeableMob> type = getOffspringType();
-        return type == null ? null : type.create(level);
+        return null;
+    }
+
+    @Override
+    public boolean canFallInLove() {
+        return false;
+    }
+
+    @Override
+    public void setAge(int age) {
+        super.setAge(0);
     }
 
     @Override
@@ -181,7 +168,7 @@ public abstract class AbstractBearEntity extends Animal implements NeutralMob {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return this.isBaby() ? ModSounds.BEAR_AMBIENT_BABY.get() : ModSounds.BEAR_AMBIENT.get();
+        return ModSounds.BEAR_AMBIENT.get();
     }
 
     @Override
@@ -272,7 +259,7 @@ public abstract class AbstractBearEntity extends Animal implements NeutralMob {
                                                  @NotNull MobSpawnType spawnType,
                                                  @Nullable SpawnGroupData spawnGroupData) {
         if (spawnGroupData == null) {
-            spawnGroupData = new AgeableMob.AgeableMobGroupData(1.0F);
+            spawnGroupData = new AgeableMob.AgeableMobGroupData(false);
         }
 
         SpawnGroupData data = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
@@ -291,7 +278,7 @@ public abstract class AbstractBearEntity extends Animal implements NeutralMob {
 
         @Override
         public boolean canUse() {
-            return (AbstractBearEntity.this.isBaby() || AbstractBearEntity.this.isOnFire()) && super.canUse();
+            return AbstractBearEntity.this.isOnFire() && super.canUse();
         }
     }
 
@@ -336,50 +323,4 @@ public abstract class AbstractBearEntity extends Animal implements NeutralMob {
         }
     }
 
-    class BearRevengeGoal extends HurtByTargetGoal {
-        public BearRevengeGoal() {
-            super(AbstractBearEntity.this);
-        }
-
-        @Override
-        public void start() {
-            super.start();
-            if (AbstractBearEntity.this.isBaby()) {
-                this.alertOthers();
-                this.stop();
-            }
-        }
-
-        @Override
-        protected void alertOther(@NotNull Mob mob, @NotNull LivingEntity target) {
-            if (mob instanceof AbstractBearEntity && !mob.isBaby()) {
-                super.alertOther(mob, target);
-            }
-        }
-    }
-
-    class ProtectBabiesGoal extends NearestAttackableTargetGoal<Player> {
-        public ProtectBabiesGoal() {
-            super(AbstractBearEntity.this, Player.class, 20, true, true, null);
-        }
-
-        @Override
-        public boolean canUse() {
-            if (!AbstractBearEntity.this.isBaby() && super.canUse()) {
-                List<AbstractBearEntity> list = AbstractBearEntity.this.level().getEntitiesOfClass(
-                        AbstractBearEntity.class,
-                        AbstractBearEntity.this.getBoundingBox().inflate(8.0D, 4.0D, 8.0D)
-                );
-                for (AbstractBearEntity bear : list) {
-                    if (bear.isBaby()) return true;
-                }
-            }
-            return false;
-        }
-
-        @Override
-        protected double getFollowDistance() {
-            return super.getFollowDistance() * 0.5D;
-        }
-    }
 }

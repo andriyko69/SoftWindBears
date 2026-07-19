@@ -1,9 +1,9 @@
 package io.github.andriyko69.softwindbears.registry;
 
 import io.github.andriyko69.softwindbears.SoftWindBears;
+import io.github.andriyko69.softwindbears.item.AdultBearSpawnEggItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -13,16 +13,14 @@ public class ModItems {
             DeferredRegister.createItems(SoftWindBears.MOD_ID);
 
     public static final Supplier<Item> GRIZZLY_SPAWN_EGG = ITEMS.register("grizzly_spawn_egg", () ->
-            new DeferredSpawnEggItem(
+            new AdultBearSpawnEggItem(
                     ModEntities.GRIZZLY_BEAR,
                     0x8B4513, // Brown color
                     0xFFFFFF,
                     new Item.Properties()
             ));
-    public static final Supplier<Item> BEAR_SKIN = ITEMS.registerSimpleItem("bear_skin");
-
     public static final Supplier<Item> PANDA_SPAWN_EGG = ITEMS.register("panda_spawn_egg", () ->
-            new DeferredSpawnEggItem(
+            new AdultBearSpawnEggItem(
                     ModEntities.BEAR_PANDA,
                     0xFFFFFF,
                     0x000000,

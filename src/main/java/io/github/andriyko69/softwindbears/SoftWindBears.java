@@ -56,9 +56,5 @@ public class SoftWindBears {
             event.accept(ModItems.GRIZZLY_SPAWN_EGG.get());
             event.accept(ModItems.PANDA_SPAWN_EGG.get());
         }
-
-        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(ModItems.BEAR_SKIN.get());
-        }
     }
 }
